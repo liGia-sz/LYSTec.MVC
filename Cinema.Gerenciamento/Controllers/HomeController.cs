@@ -1,31 +1,75 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using Cinema.Gerenciamento.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Cinema.Gerenciamento.Controllers;
-
-public class HomeController : Controller
+namespace Cinema.Gerenciamento.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly CinemaDbContext _context;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        public HomeController(CinemaDbContext context)
+        {
+            _context = context;
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        // GET: Home/Index (Dashboard)
+        public async Task<IActionResult> Index()
+        {
+            // O dashboard deve mostrar um resumo das informações mais importantes.
+            // Para isso, precisamos buscar alguns dados do banco de dados.
+            
+            // 1. Número de alertas fiscais pendentes
+            ViewBag.AlertasPendentes = await _context.AlertasFiscais
+                .CountAsync(a => a.Status == "Aberto");
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            // 2. Próximas sessões (ex: as 5 sessões mais próximas)
+            var proximasSessoes = await _context.Sessoes
+                .Include(s => s.Filme)
+                .Include(s => s.Sala)
+                .Where(s => s.HorarioInicio >= System.DateTime.Now)
+                .OrderBy(s => s.HorarioInicio)
+                .Take(5)
+                .ToListAsync();
+
+            // 3. A taxa de ocupação da última sessão (exemplo de lógica)
+            // Você precisaria de uma lógica mais robusta para isso.
+            // Aqui, apenas um exemplo simples:
+            var ultimaSessao = await _context.Sessoes
+                .OrderByDescending(s => s.HorarioInicio)
+                .FirstOrDefaultAsync();
+            
+            if (ultimaSessao != null)
+            {
+                var reservasUltimaSessao = await _context.Reservas
+                    .CountAsync(r => r.SessaoId == ultimaSessao.Id);
+                var capacidadeSala = await _context.Salas
+                    .Where(s => s.Id == ultimaSessao.SalaId)
+                    .Select(s => s.CapacidadeTotal)
+                    .FirstOrDefaultAsync();
+
+                if (capacidadeSala > 0)
+                {
+                    ViewBag.TaxaOcupacao = (double)reservasUltimaSessao / capacidadeSala * 100;
+                }
+            }
+
+            return View(proximasSessoes);
+        }
+
+        // Ações padrão que você pode manter ou remover
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }
