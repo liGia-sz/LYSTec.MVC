@@ -16,11 +16,11 @@ namespace Cinema.Gerenciamento.Models
         public int DuracaoMinutos { get; set; }
 
         [StringLength(500)]
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
 
-        public string ImagemUrl { get; set; }
+        public string? ImagemUrl { get; set; }
 
         // Propriedade de navegação para o relacionamento com Sessao
-        public virtual ICollection<Sessao> Sessoes { get; set; }
-    }
+        public virtual ICollection<Sessao> Sessoes { get; set; } = new List<Sessao>();   
+         }
 }

@@ -20,3 +20,55 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Estilos para o mapa da sala */
+.sala-mapa {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espaço entre as poltronas */
+    justify-content: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.poltrona {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+/* Cores de acordo com o status */
+.poltrona-reservada {
+    background-color: #007bff; /* Azul padrão */
+}
+
+.poltrona-ocupada-indevida {
+    background-color: #dc3545; /* Vermelho para ocupação indevida */
+    animation: pulse-red 1.5s infinite;
+}
+
+.poltrona-livre {
+    background-color: #28a745; /* Verde para livre */
+}
+
+.poltrona:hover {
+    opacity: 0.8;
+}
+
+/* Animação para a poltrona ocupada indevidamente */
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}

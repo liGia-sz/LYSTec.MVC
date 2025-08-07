@@ -18,12 +18,28 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Alunos\Documents\LÍGIAA\LYSTec.MVC\Cinema.Gerenciamento
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Alunos/Documents/LÍGIAA/LYSTec.MVC/Cinema.Gerenciamento/Views/AlertaFiscal/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWxlcnRhRmlzY2FsXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alunos/Documents/LÍGIAA/LYSTec.MVC/Cinema.Gerenciamento/Views/Filme/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsbWVcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alunos/Documents/LÍGIAA/LYSTec.MVC/Cinema.Gerenciamento/Views/Filme/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsbWVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Alunos/Documents/LÍGIAA/LYSTec.MVC/Cinema.Gerenciamento/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Alunos/Documents/LÍGIAA/LYSTec.MVC/Cinema.Gerenciamento/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alunos/Documents/LÍGIAA/LYSTec.MVC/Cinema.Gerenciamento/Views/Sala/Mapa.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsYVxNYXBhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Alunos/Documents/LÍGIAA/LYSTec.MVC/Cinema.Gerenciamento/Views/Shared/Error.cshtml]

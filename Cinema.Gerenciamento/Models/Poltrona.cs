@@ -10,7 +10,8 @@ namespace Cinema.Gerenciamento.Models
 
         [Required(ErrorMessage = "O número da poltrona é obrigatório.")]
         public string Numero { get; set; }
-
+        public string Status { get; set; } // Exemplo: "Disponível", "Reservada", "Ocupada"
+        
         // Chave estrangeira para a Sala
         public int SalaId { get; set; }
         [ForeignKey("SalaId")]
@@ -19,6 +20,7 @@ namespace Cinema.Gerenciamento.Models
         [Required]
         public string CodigoQR { get; set; }
 
+        public virtual ICollection<Sessao> Sessoes { get; set; } = new List<Sessao>();
         // Relacionamento com as reservas
         public virtual ICollection<Reserva> Reservas { get; set; }
     }

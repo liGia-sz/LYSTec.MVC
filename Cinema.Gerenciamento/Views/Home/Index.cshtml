@@ -1,8 +1,72 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Cinema.Gerenciamento.Models
+@model List<Sessao>
+
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bem-vindo ao Sistema de Gerenciamento do Cinema!</h1>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <h5 class="card-title">Alertas Pendentes</h5>
+                <p class="card-text display-3">@ViewBag.AlertasPendentes</p>
+                <a href="@Url.Action("Index", "AlertaFiscal")" class="btn btn-light">Ver Alertas</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">Taxa de Ocupação Recente</h5>
+                <p class="card-text display-3">@ViewBag.TaxaOcupacao%</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-secondary text-white">
+            <div class="card-body">
+                <h5 class="card-title">Acesso Rápido</h5>
+                <p class="card-text">Gerencie as principais funcionalidades do sistema.</p>
+                <a href="@Url.Action("Index", "Sessao")" class="btn btn-light mt-2">Gerenciar Sessões</a>
+                <a href="@Url.Action("Index", "Filme")" class="btn btn-light mt-2">Gerenciar Filmes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5">
+    <h2>Próximas Sessões</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Filme</th>
+                <th>Sala</th>
+                <th>Horário</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var sessao in Model)
+                {
+                    <tr>
+                        <td>@sessao.Filme.Titulo</td>
+                        <td>@sessao.Sala.Numero</td>
+                        <td>@sessao.HorarioInicio.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3">Nenhuma sessão futura encontrada.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

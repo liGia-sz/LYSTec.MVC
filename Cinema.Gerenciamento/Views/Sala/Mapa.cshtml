@@ -1,0 +1,79 @@
+@model Cinema.Gerenciamento.Models.Sala
+
+@{
+    ViewData["Title"] = $"Mapa da Sala {Model.Numero}";
+}
+
+<h1>Mapa da Sala @Model.Numero</h1>
+
+<div class="container-fluid">
+    <div class="sala-mapa">
+        @foreach (var poltrona in Model.Poltronas.OrderBy(p => p.Numero))
+{
+    // Exemplo: assumindo que você tem uma propriedade de status na poltrona
+    // string cssClass = "poltrona-" + poltrona.Status.ToLower(); 
+
+    <button class="poltrona poltrona-reservada" data-poltrona-id="@poltrona.Id" data-status="Reservada">
+        @poltrona.Numero
+    </button>
+}
+    </div>
+</div>
+
+<div class="modal fade" id="poltronaModal" tabindex="-1" role="dialog" aria-labelledby="poltronaModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="poltronaModalLabel">Poltrona <span id="modalPoltronaNumero"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Status atual: <strong id="modalPoltronaStatus"></strong></p>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success" id="btnLiberarPoltrona">Liberar Poltrona</button>
+                <button type="button" class="btn btn-danger" id="btnRegistrarPenalizacao">Registrar Penalização</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Lógica para lidar com o clique na poltrona
+            $('.poltrona').click(function () {
+                var poltronaId = $(this).data('poltrona-id');
+                var poltronaStatus = $(this).data('status');
+                var poltronaNumero = $(this).text();
+
+                $('#modalPoltronaNumero').text(poltronaNumero);
+                $('#modalPoltronaStatus').text(poltronaStatus);
+                
+                // Abre o modal
+                $('#poltronaModal').modal('show');
+                $('#poltronaModal').data('poltrona-id', poltronaId); // Armazena o ID no modal
+            });
+
+            // Exemplo de como você faria uma chamada AJAX para o Controller
+            $('#btnLiberarPoltrona').click(function () {
+                var poltronaId = $('#poltronaModal').data('poltrona-id');
+                $.ajax({
+                    url: '@Url.Action("AlterarStatusPoltrona", "Sala")',
+                    type: 'POST',
+                    data: { poltronaId: poltronaId, novoStatus: "Livre" },
+                    success: function (result) {
+                        if (result.success) {
+                            alert('Poltrona liberada com sucesso!');
+                            // Recarregar a página ou atualizar a UI
+                            location.reload(); 
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -12,7 +12,7 @@ namespace Cinema.Gerenciamento.Models
         [Required]
         public int SessaoId { get; set; }
         [ForeignKey("SessaoId")]
-        public virtual Sessao Sessao { get; set; }
+        public virtual ICollection<Sessao> Sessoes { get; set; } = new List<Sessao>();
 
         [Required]
         public int PoltronaId { get; set; }

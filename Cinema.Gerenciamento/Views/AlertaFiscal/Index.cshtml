@@ -1,0 +1,42 @@
+@model IEnumerable<Cinema.Gerenciamento.Models.AlertaFiscal>
+
+@{
+    ViewData["Title"] = "Alertas Fiscais";
+}
+
+<h1>Alertas Fiscais Pendentes</h1>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-success" role="alert">
+        Não há alertas pendentes no momento.
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Sessão</th>
+                <th>Poltrona</th>
+                <th>Data do Alerta</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var alerta in Model)
+            {
+                <tr>
+                    <td>@alerta.Sessao.Filme.Titulo (@alerta.Sessao.HorarioInicio.ToString("HH:mm"))</td>
+                    <td>@alerta.Poltrona.Numero</td>
+                    <td>@alerta.DataAlerta.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        <form asp-action="Resolver" asp-route-id="@alerta.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-success">Marcar como Resolvido</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

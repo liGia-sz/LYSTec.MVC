@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using Cinema.Gerenciamento.Models;
 var builder = WebApplication.CreateBuilder(args);
+
+// Configurar o DbContext
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<CinemaDbContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddEndpointsApiExplorer();
+
 
 var app = builder.Build();
 

@@ -12,17 +12,17 @@ namespace Cinema.Gerenciamento.Models
         [Required]
         public int SessaoId { get; set; }
         [ForeignKey("SessaoId")]
-        public virtual Sessao Sessao { get; set; }
+        public virtual Sessao? Sessao { get; set; } // <<-- ESTA É A LINHA QUE ESTÁ FALTANDO
 
         [Required]
         public int PoltronaId { get; set; }
         [ForeignKey("PoltronaId")]
-        public virtual Poltrona Poltrona { get; set; }
+        public virtual Poltrona? Poltrona { get; set; } // <<-- E ESTA
 
         [Required]
         public DateTime DataAlerta { get; set; }
 
         [Required]
-        public string Status { get; set; } // Ex: "Aberto", "Verificado", "Falso"
+        public string? Status { get; set; }
     }
 }

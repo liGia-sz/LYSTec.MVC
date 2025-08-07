@@ -1,7 +1,7 @@
-using Cinema.Gerenciamento.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Cinema.Gerenciamento.Models;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,12 +16,8 @@ namespace Cinema.Gerenciamento.Controllers
             _context = context;
         }
 
-        // GET: Home/Index (Dashboard)
         public async Task<IActionResult> Index()
         {
-            // O dashboard deve mostrar um resumo das informações mais importantes.
-            // Para isso, precisamos buscar alguns dados do banco de dados.
-            
             // 1. Número de alertas fiscais pendentes
             ViewBag.AlertasPendentes = await _context.AlertasFiscais
                 .CountAsync(a => a.Status == "Aberto");
@@ -36,8 +32,6 @@ namespace Cinema.Gerenciamento.Controllers
                 .ToListAsync();
 
             // 3. A taxa de ocupação da última sessão (exemplo de lógica)
-            // Você precisaria de uma lógica mais robusta para isso.
-            // Aqui, apenas um exemplo simples:
             var ultimaSessao = await _context.Sessoes
                 .OrderByDescending(s => s.HorarioInicio)
                 .FirstOrDefaultAsync();
@@ -56,11 +50,14 @@ namespace Cinema.Gerenciamento.Controllers
                     ViewBag.TaxaOcupacao = (double)reservasUltimaSessao / capacidadeSala * 100;
                 }
             }
+            else
+            {
+                ViewBag.TaxaOcupacao = 0.0;
+            }
 
             return View(proximasSessoes);
         }
 
-        // Ações padrão que você pode manter ou remover
         public IActionResult Privacy()
         {
             return View();
